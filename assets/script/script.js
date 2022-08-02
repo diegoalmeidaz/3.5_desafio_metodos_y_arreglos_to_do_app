@@ -4,6 +4,7 @@ const addForm = document.querySelector('.add');
 const list = document.querySelector('.todos')
 const search = document.querySelector('.search input')
 const counter = document.querySelector('#contadorTareas')
+const pendientes = document.querySelector('#contadorTareasTerminadas')
 
 
 const tasks = [
@@ -18,7 +19,7 @@ console.log(tasks);
 const generateTemplate = (todo) => {
     return `
         <li class="list-group-item d-flex justify-content-between align-items-center">
-        <input class="form-check-input me-1" type="checkbox" onclick="cambiarEstado(${todo.state})" value="(${todo.id})" aria-label="...">
+        <input type="checkbox" id=${todo.id} onclick="cambiarEstado(${todo.state})" 
             <span>${todo.task}</span>
             <i class="far fa-trash-alt delete" id=(${todo.id})></i>
         </li>
@@ -32,12 +33,15 @@ const generateTemplate = (todo) => {
 const printTodo = () => {
     let html = "";
     let contador = "";
+    let falses = "";
     for (const task of tasks) {
         html += generateTemplate(task);
         contador ++
+        falses ++
     }
     list.innerHTML = html;
     counter.innerHTML = contador;
+    pendientes.innerHTML = falses;
 
 };
 
@@ -54,7 +58,6 @@ addForm.addEventListener('submit', e => {
    
 
     if(todo.length){
-       
         tasks.push({id: Date.now(), task: todo, state: false});
         todo = "";
         printTodo(tasks);
@@ -76,32 +79,6 @@ console.log (tasks)
 
 
 
-
-
-
-
-
-const removeItem = (tasks, id) => {
-    let newTasks = [...tasks]
-    const index = newTasks.findIndex((element) => element === id)
-    if(index !==-1) {
-        newTasks.splice(index, 1)
-        return newTasks
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 list.addEventListener('click', e => {
     
     if(e.target.classList.contains('delete')){
@@ -114,8 +91,19 @@ list.addEventListener('click', e => {
     printTodo(tasks)
 });
 
+/* Funcion para cambiar los status */
+
+function cambiarEstado(state) {
+    tasks.map((ele) => {
+      if (ele.state == state) ele.id = !ele.id;
+    });
+    printTodo(tasks);
+  }
+
+
 
 document.addEventListener("DOMContentLoaded", printTodo)
+
 
 
 
