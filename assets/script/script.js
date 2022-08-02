@@ -28,7 +28,7 @@ console.log(tasks);
 const generateTemplate = (todo) => {
     return `
         <li class="list-group-item d-flex justify-content-between align-items-center">
-        <input type="checkbox" id=${todo.id} onclick="cambiarEstado(${todo.state})" 
+        <input type="checkbox" id=${todo.id} onclick="cambiarEstado(${todo.id})" ${todo.state ? "checked" : ""} />
             <span>${todo.task}</span>
             <i class="far fa-trash-alt delete" id=(${todo.id})></i>
         </li>
@@ -42,17 +42,16 @@ const generateTemplate = (todo) => {
 const printTodo = () => {
     let html = "";
     let contador = "";
-    let falses = "";
     for (const task of tasks) {
-        html += generateTemplate(task);
-        contador ++
-        falses ++
+      html += generateTemplate(task);
+      contador++;
     }
     list.innerHTML = html;
     counter.innerHTML = contador;
-    pendientes.innerHTML = falses;
-
-};
+    const arr = tasks.filter((task) => task.state == true);
+    const conteo = arr.length;
+    pendientes.innerHTML = conteo;
+  };
 
 
 
@@ -106,6 +105,7 @@ function cambiarEstado(id) {
     tasks.map((task) => {
       if (task.id == id) task.state = !task.state;
     });
+  
     printTodo(tasks);
   }
 
