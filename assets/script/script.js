@@ -8,9 +8,18 @@ const pendientes = document.querySelector('#contadorTareasTerminadas')
 
 
 const tasks = [
-  { id: 1, task: "Tratar de conquistar el mundo", state: false },
-  { id: 2, task: "Regar las plantas", state: false },
-  { id: 3, task: "Estudiar con Pinky", state: false },
+  { 
+    id: 1, 
+    task: "Tratar de conquistar el mundo", 
+    state: false },
+
+  { id: 2, 
+    task: "Regar las plantas", 
+    state: false },
+
+  { id: 3, 
+    task: "Estudiar con Pinky", 
+    state: false },
 ];
 
 console.log(tasks);
@@ -93,9 +102,9 @@ list.addEventListener('click', e => {
 
 /* Funcion para cambiar los status */
 
-function cambiarEstado(state) {
-    tasks.map((ele) => {
-      if (ele.state == state) ele.id = !ele.id;
+function cambiarEstado(id) {
+    tasks.map((task) => {
+      if (task.id == id) task.state = !task.state;
     });
     printTodo(tasks);
   }
